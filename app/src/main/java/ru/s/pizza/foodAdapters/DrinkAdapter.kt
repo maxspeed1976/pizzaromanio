@@ -32,7 +32,7 @@ class DrinkAdapter (context: Context, private val list: ArrayList<Drink>
         private val price: TextView = itemView.findViewById(R.id.price_drink_list)
 
         fun bind(drink: Drink) {
-            image.setImageResource(drink.picture)
+          //  image.setImageResource(drink.picture)
             name.text = drink.name
             price.text = "  от ${drink.price.toString()} руб.  "
         }

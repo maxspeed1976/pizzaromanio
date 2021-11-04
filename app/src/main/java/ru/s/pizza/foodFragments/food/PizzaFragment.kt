@@ -30,9 +30,17 @@ class PizzaFragment : Fragment() {
         val context = requireActivity().applicationContext
         val list = view.findViewById<RecyclerView>(R.id.pizzaList)
         var listPizza: ArrayList<Pizza> = ArrayList()
+        listPizza = arrayListOf(
+            Pizza(1,"Маргарита","120","650,1200","помидор, сыр, моцарелла",
+                R.drawable.a4),
+            Pizza(2,"Сальмоне","130","800","лосось, сыр, помидоры", R.drawable.a1),
+            Pizza(3,"Мясная","150","950","лосось, сыр, помидоры", R.drawable.a2),
+            Pizza(3,"Охотничья","250","1050","лосось, сыр, помидоры", R.drawable.a3
 
-        val sr = Server(context)
-        if (sr.isOnline) {
+            )
+        )
+        val sr = Server()
+        if (sr.isOnline()) {
             if (listPizza.size == 0) {
                 Toast.makeText(context, "Connection", Toast.LENGTH_SHORT).show()
                 var i = 1

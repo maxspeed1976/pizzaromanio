@@ -24,8 +24,8 @@ class FoodFragment : Fragment() {
         val viewPager = view.findViewById<ViewPager>(R.id.viewPager)
         val tabs = view.findViewById<TabLayout>(R.id.tabs)
 
-        val sr = Server(context)
-        if (sr.isOnline) setUpViewPagerInternet(viewPager) else setUpViewPager(viewPager, context)
+        val sr = Server()
+        if (sr.isOnline()) setUpViewPagerInternet(viewPager) else setUpViewPager(viewPager, context)
         tabs.setupWithViewPager(viewPager)
 
         return view

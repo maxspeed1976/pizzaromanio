@@ -33,7 +33,7 @@ class DessertAdapter (context: Context, private val list: ArrayList<Dessert>
         private val ingredient: TextView = itemView.findViewById(R.id.description_dessert_list)
 
         fun bind(dessert: Dessert) {
-            image.setImageResource(dessert.picture)
+          //  image.setImageResource(dessert.picture)
             name.text = dessert.name
             price.text = "  от ${dessert.price.toString()} руб.  "
             ingredient.text = dessert.description

@@ -17,154 +17,30 @@ import ru.s.pizza.models.food.Dessert
 import ru.s.pizza.models.food.Drink
 import ru.s.pizza.models.food.Pizza
 
-class Server (val context: Context) {
+class Server () {
 
     private val retrofitImpl: RetrofitImpl = RetrofitImpl()
-    val isOnline = isOnline(context)
 
-    private fun isOnline(context: Context?): Boolean {
+    fun isOnline(): Boolean {
 
-        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val n = cm.activeNetwork
-        if (n != null) {
-            val nc = cm.getNetworkCapabilities(n)
-            return nc!!.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || nc.hasTransport(
-                NetworkCapabilities.TRANSPORT_WIFI
-            )
-        }
-        return false
+        return true
     }
 
-    fun sendServerRequestDessert(context: Context?, list: RecyclerView, i: Int, listDessert: ArrayList<Dessert>) {
+    fun sendServerRequestDessert(context: Context?, list: RecyclerView, i: Int, listDessert: ArrayList<Dessert>): List<Dessert> {
 
-        retrofitImpl.getRetrofit().getDessert(i).enqueue(object : Callback<DessertData> {
-
-            override fun onResponse(
-                call: Call<DessertData>, response: Response<DessertData>
-            ) {
-                if (response.isSuccessful && response.body() != null) {
-                    //val str = response.body()?.name
-                    //Toast.makeText(context, str + "!!!!", Toast.LENGTH_SHORT).show()
-
-                    val dessert = Dessert(
-                        response.body()!!.id,
-                        response.body()!!.name,
-                        response.body()!!.price,
-                        response.body()!!.weight,
-                        response.body()!!.count,
-                        response.body()!!.ingredient,
-                        context?.resources?.getIdentifier(
-                            response.body()!!.picture,
-                            "drawable", context.packageName
-                        )!!
-                    )
-                    listDessert.add(dessert)
-                }
-
-                if (i == 5) {
-                    val adapter = DessertAdapter(context!!, listDessert)
-
-                    list.adapter = adapter
-
-                    val decoration =
-                        DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL)
-                    decoration.setDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.color.colorPrimary
-                        )!!
-                    )
-                    list.addItemDecoration(decoration)
-                }
-            }
-
-            override fun onFailure(call: Call<DessertData>, t: Throwable) {
-                //
-            }
-        })
+        return retrofitImpl.getDessert()
     }
 
-    fun sendServerRequestPizza(context: Context?, list: RecyclerView, i: Int, listPizza: ArrayList<Pizza>) {
+    fun sendServerRequestPizza(context: Context?, list: RecyclerView, i: Int, listPizza: ArrayList<Pizza>): ArrayList<Pizza> {
 
-        retrofitImpl.getRetrofit().getPizza(i).enqueue(object : Callback<PizzaData> {
-
-            override fun onResponse(
-                call: Call<PizzaData>, response: Response<PizzaData>
-            ) {
-
-                if (response.isSuccessful && response.body() != null) {
-                    //val str = response.body()?.name
-                    //Toast.makeText(context, str + "!!!!", Toast.LENGTH_SHORT).show()
-
-                    val pizza = Pizza(
-                        response.body()!!.id, response.body()!!.name, response.body()!!.prices,
-                        response.body()!!.weights, response.body()!!.ingredient,
-                        context?.resources?.getIdentifier(response.body()!!.picture,
-                            "drawable", context.packageName)!!)
-                    listPizza.add(pizza)
-                }
-
-                val adapter = PizzaAdapter(context!!, listPizza)
-
-                list.adapter = adapter
-
-                val decoration =
-                    DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL)
-                decoration.setDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.color.colorPrimary
-                    )!!
-                )
-                list.addItemDecoration(decoration)
-
-            }
-
-            override fun onFailure(call: Call<PizzaData>, t: Throwable) {
-                //
-            }
-        })
+        return retrofitImpl.getPizza()
     }
 
-    fun sendServerRequestDrink(context: Context?, list: RecyclerView, i: Int, listDrink: ArrayList<Drink>) {
 
-        retrofitImpl.getRetrofit().getDrink(i).enqueue(object : Callback<DrinkData> {
+    fun sendServerRequestDrink(context: Context?, list: RecyclerView, i: Int, listPizza: ArrayList<Drink>): List<Drink> {
 
-            override fun onResponse(
-                call: Call<DrinkData>, response: Response<DrinkData>
-            ) {
-                if (response.isSuccessful && response.body() != null) {
-                    //val str = response.body()?.name
-                    //Toast.makeText(context, str + "!!!!", Toast.LENGTH_SHORT).show()
-
-                    val drink = Drink(
-                        response.body()!!.id, response.body()!!.name, response.body()!!.prices,
-                        response.body()!!.volumes,
-                        context?.resources?.getIdentifier(response.body()!!.picture,
-                            "drawable", context.packageName)!!)
-                    listDrink.add(drink)
-                }
-
-                val adapter = DrinkAdapter(context!!, listDrink)
-
-                list.adapter = adapter
-
-                val decoration =
-                    DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL)
-                decoration.setDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.color.colorPrimary
-                    )!!
-                )
-                list.addItemDecoration(decoration)
-
-            }
-
-            override fun onFailure(call: Call<DrinkData>, t: Throwable) {
-                //
-            }
-        })
+        return retrofitImpl.getDrink()
     }
+
+
 }

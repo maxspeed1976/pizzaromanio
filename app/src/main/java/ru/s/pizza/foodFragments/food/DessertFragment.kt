@@ -31,8 +31,8 @@ class DessertFragment : Fragment() {
         val list = view.findViewById<RecyclerView>(R.id.dessertList)
         var listDessert: ArrayList<Dessert> = ArrayList()
 
-        val sr = Server(context)
-        if (sr.isOnline) {
+        val sr = Server()
+        if (sr.isOnline()) {
             if (listDessert.size == 0) {
                 Toast.makeText(context, "Connection", Toast.LENGTH_SHORT).show()
                 var i = 1
